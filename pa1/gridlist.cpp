@@ -94,7 +94,7 @@ void GridList::Clear()
     northwest->prev = NULL;
     delete northwest;
     northwest = northwest->next;
-    nortwest->prev->next = NULL;
+    northwest->prev->next = NULL;
   }
 
   northwest->prev = NULL;
