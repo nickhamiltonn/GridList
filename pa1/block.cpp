@@ -1,5 +1,11 @@
-
 #include "block.h"
+#include <vector>
+#include <iostream>
+#include "cs221util/PNG.h"
+#include "cs221util/HSLAPixel.h"
+
+using namespace std;
+using namespace cs221util;
 
 // set values in data attribute, based on a dimension x dimension square region
   //   with upper-left corner at (left, upper) in the input PNG image
@@ -8,7 +14,19 @@
   // PRE: upper and left (and upper + dimension, left + dimension) are valid
   //        vector indices
   void Build(PNG& im, int upper, int left, int dimension) {
-
+	  // (0,0) is upper left corner of entire image
+	  
+	  // Iterate through every pixel in defined square
+	  for (int x = left; x < (left + dimension); x++) {
+		  vector<HSLAPixel> column;
+		  for (int y = upper; y < (upper + dimension); y++) {
+			  // add pixel to vector
+			  HSLAPixel * pixel = im::getPixel(x, y);
+			  column.push_back(pixel);
+		  }
+		  // add column to image
+		  data.push_back(column);
+	  }
 
   }
 
