@@ -40,12 +40,14 @@ using namespace cs221util;
   // PRE: upper and left (and upper + dimension, left + dimension) are valid
   //        vector indices
   void Render(PNG& im, int upper, int left) {
-	//am I able to just change imageDataArray cause its private?
+	  // Can change data array because it is private to this class
     //see if this condition for for loop makes sense
     for (int height = 0; height < (int)data.size(); height++) {
       for (int width = 0; width < (int)data.size(); width++) {
-        HSLAPixel* currPixel = im.getPixel(upper + height, left + width);
-        *currPixel = data[height][width]; // why assign currPixel to something then immediatly something else
+        HSLAPixel* currPixelI = im.getPixel(upper + height, left + width);
+		vector<HSLAPixel> column = data.at(height);
+        //HSLAPixel * currPixelD = column.at(width);
+		// get color from pixelD and put into color for pixelI
         //*(imageData_ + (upper - height) = data[height][width];
       }
     }
