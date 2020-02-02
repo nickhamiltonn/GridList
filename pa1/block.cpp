@@ -16,13 +16,13 @@ using namespace cs221util;
   //   of the pixels in the PNG.
   // PRE: upper and left (and upper + dimension, left + dimension) are valid
   //        vector indices
-  void Build(PNG& im, int upper, int left, int dimension) {
+  void Block::Build(PNG& im, int upper, int left, int dimension) {
 	  // (0,0) is upper left corner of entire image
 	  
 	  // Iterate through every pixel in defined square
-	  for (int x = left; x < (left + dimension); x++) {
+	  for (int x = left; x <= (left + dimension); x++) {
 		  vector<HSLAPixel> column;
-		  for (int y = upper; y < (upper + dimension); y++) {
+		  for (int y = upper; y <= (upper + dimension); y++) {
 			  
 			  // add pixel to vector
 			  HSLAPixel * pixel = im.getPixel(x, y);
@@ -39,16 +39,21 @@ using namespace cs221util;
   //   with upper-left corner at (left, upper)
   // PRE: upper and left (and upper + dimension, left + dimension) are valid
   //        vector indices
-  void Render(PNG& im, int upper, int left) {
+  void Block::Render(PNG& im, int upper, int left) const
+  {
 	  // Can change data array because it is private to this class
-    //see if this condition for for loop makes sense
-    for (int height = 0; height < (int)data.size(); height++) {
-      for (int width = 0; width < (int)data.size(); width++) {
-        HSLAPixel* currPixelI = im.getPixel(upper + height, left + width);
-		vector<HSLAPixel> column = data.at(height);
-        //HSLAPixel * currPixelD = column.at(width);
-		// get color from pixelD and put into color for pixelI
-        //*(imageData_ + (upper - height) = data[height][width];
+    // start at top left corner and go to width and height of dimention
+	for (int width = left; width <= (left + dimension); width++) {
+	  // read column from vector
+	  vector<HSLAPixel> column = data.at(width);
+	  
+      for (int height = upper; height <= (upper + dimension); height++) {
+        HSLAPixel* currPixelI = im.getPixel(width, height);
+        HSLAPixel currPixelD = column.at(height);
+		
+		// get color from pixelD and put into color for pixelI (I don't know exactly what is supposed to happen!)
+		// But i did get each pixel in image and equvanlent in vector in defined range
+        //*(imageData_ + (upper - height) = currPixelD;
       }
     }
   }
@@ -58,13 +63,14 @@ using namespace cs221util;
   //   to simulate a photo-negative effect.
   // Refer to the HSLAPixel documentation to determine an appropriate transformation
   //   for "reversing" hue and luminance.
-  void Negative() {
+  void Block::Negative() {
 
 
 
   }
 
   // Return the horizontal (or vertical) size of the data block's image region
-  int  Dimension() {
+  int Block::Dimension() const 
+  {
     return (int)data.size();
   }
