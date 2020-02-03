@@ -70,7 +70,38 @@ void GridList::Sandwich_V(GridList& inner)
 // DO NOT ALLOCATE OR DELETE ANY NODES IN THIS FUNCTION.
 void GridList::CheckerSwap(GridList& otherlist)
 {
-  // enter your code here
+  // get starting node
+  GridNode* node = northwest;
+  
+  // fist node is uneffected and figure out if the size is nxn or nxm
+  bool makeNeg = false;
+  bool square;
+  if (dimx == dimy) {
+	square = true;
+  } else {
+	square = false;
+  }
+  
+  int count = 1;
+  
+  // itterate through each eliment
+  while (node != NULL) {
+	if (makeNeg) {
+		Block negBlock = node -> data;
+		negBlock.Negative();
+		node -> data = negBlock;
+	}
+	
+	// determine if next block modifcation
+	if (square || count != dimx) {
+		makeNeg = !makeNeg;
+	} else {
+		count = 1;
+	}
+	
+	count++;
+	node = node -> next;
+  }
 }
 
 // POST: this list has the negative effect applied selectively to GridNodes to form
