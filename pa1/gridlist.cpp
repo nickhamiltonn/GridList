@@ -72,9 +72,10 @@ void GridList::CheckerSwap(GridList& otherlist)
 {
   // get starting node
   GridNode* node = northwest;
+  GridNode* node2 = otherlist.northwest;
   
   // fist node is uneffected and figure out if the size is nxn or nxm
-  bool makeNeg = false;
+  bool makeOther = false;
   bool square;
   if (dimx == dimy) {
 	square = true;
@@ -86,21 +87,21 @@ void GridList::CheckerSwap(GridList& otherlist)
   
   // itterate through each eliment
   while (node != NULL) {
-	if (makeNeg) {
-		Block negBlock = node -> data;
-		negBlock.Negative();
-		node -> data = negBlock;
+	if (makeOther) {
+		node -> next = node2;
+		node -> next -> prev = node;
 	}
 	
 	// determine if next block modifcation
 	if (square || count != dimx) {
-		makeNeg = !makeNeg;
+		makeOther = !makeOther;
 	} else {
 		count = 1;
 	}
 	
 	count++;
 	node = node -> next;
+	node2 = node2 -> next;
   }
 }
 
