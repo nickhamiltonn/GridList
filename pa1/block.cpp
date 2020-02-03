@@ -18,12 +18,12 @@ using namespace cs221util;
   //        vector indices
   void Block::Build(PNG& im, int upper, int left, int dimension) {
 	  // (0,0) is upper left corner of entire image
-	  
+
 	  // Iterate through every pixel in defined square
 	  for (int x = left; x <= (left + dimension); x++) {
 		  vector<HSLAPixel> column;
 		  for (int y = upper; y <= (upper + dimension); y++) {
-			  
+
 			  // add pixel to vector
 			  HSLAPixel * pixel = im.getPixel(x, y);
 			  column.push_back(*pixel);
@@ -44,15 +44,15 @@ using namespace cs221util;
 	  // Can change data array because it is private to this class
     // start at top left corner and go to width and height of dimention
 	int dimension = (int) data.size();
-	
+
 	for (int width = left; width <= (left + dimension); width++) {
 	  // read column from vector
 	  vector<HSLAPixel> column = data.at(width);
-	  
+
       for (int height = upper; height <= (upper + dimension); height++) {
         HSLAPixel* currPixelI = im.getPixel(width, height);
         HSLAPixel currPixelD = column.at(height);
-		
+
 		// get color from pixelD and put into color for pixelI (I don't know exactly what is supposed to happen!)
 		// But i did get each pixel in image and equvanlent in vector in defined range
         //*(imageData_ + (upper - height) = currPixelD;
@@ -67,12 +67,21 @@ using namespace cs221util;
   //   for "reversing" hue and luminance.
   void Block::Negative() {
 
+    for (int i = 0; i < data.size(); i++) {
+    for (int j = 0; j < data.size(); j++) {
+
+      HSLAPixel* currPixel = data[i][j];
+      currPixel.h = currPixel.h;
+
+    }
+
+  }
 
 
   }
 
   // Return the horizontal (or vertical) size of the data block's image region
-  int Block::Dimension() const 
+  int Block::Dimension() const
   {
     return (int)data.size();
   }
