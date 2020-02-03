@@ -43,6 +43,8 @@ using namespace cs221util;
   {
 	  // Can change data array because it is private to this class
     // start at top left corner and go to width and height of dimention
+	int dimension = (int) data.size();
+	
 	for (int width = left; width <= (left + dimension); width++) {
 	  // read column from vector
 	  vector<HSLAPixel> column = data.at(width);

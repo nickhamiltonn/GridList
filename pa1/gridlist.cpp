@@ -118,6 +118,7 @@ void GridList::CheckerN()
 //   and re-initializes this list to an empty state
 void GridList::Clear()
 {
+	
   // enter your code here
   //still need to check if there even is something to start
   //also need to change size, north and south pointers to null. 
@@ -131,9 +132,11 @@ void GridList::Clear()
 
   northwest->prev = NULL;
   delete northwest;
-
-
-
+  dimx = NULL;
+  dimy = NULL;
+  southeast = NULL;
+  delete southeast;
+ 
 }
 
 // Allocates new nodes into this list as copies of all nodes from otherlist
