@@ -49,6 +49,7 @@ TEST_CASE("GridList::Constructor - InsertBack - linking", "[weight=1][part=gridl
 }
 
 TEST_CASE("GridList::Render - 1x1", "[weight=1][part=gridlist]") {
+  printf("We about to start render test case\n");
   PNG img(2, 2);
   HSLAPixel* p = img.getPixel(0, 0);
   p->h = 0; p->s = 1.0; p->l = 0.25;

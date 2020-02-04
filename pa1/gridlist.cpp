@@ -18,7 +18,30 @@
 // The fully coloured PNG is returned.
 PNG GridList::Render() const
 {
-  PNG image;
+  //need to initialize properly
+
+  printf("We inside render test\n");
+
+  int height = 0;
+  int width = 0;
+  GridNode* currNode = northwest;
+  PNG image(dimx * currNode->data.Dimension(), dimy * currNode->data.Dimension());
+
+  printf("We starting render loops\n");
+
+  for (int i = 0; i < dimy; i++) {
+    for (int j = 0; j < dimx; j++) {
+      currNode->data.Render(image, height, width);
+      width += currNode->data.Dimension();
+      if (currNode->next != NULL) {
+        currNode = currNode->next;
+      }
+    }
+    height += currNode->data.Dimension();
+    width = 0;
+  }
+
+  printf("We finished render loops, about to return\n");
   // enter your code here
   return image;
 }
@@ -29,6 +52,21 @@ PNG GridList::Render() const
 void GridList::InsertBack(const Block& bdata)
 {
   // enter your code here
+
+  GridNode* newNode = new GridNode(bdata);
+  if (northwest == NULL) {
+    northwest = newNode;
+    southeast = newNode;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+  } else {
+    southeast->next = newNode;
+    newNode->prev = southeast;
+    newNode->next =  NULL;
+    southeast = newNode;
+  }
+
+
 }
 
 // if this list has an odd number of column blocks, then the right side will have more blocks
@@ -73,33 +111,33 @@ void GridList::CheckerSwap(GridList& otherlist)
   // get starting node
   GridNode* node = northwest;
   GridNode* node2 = otherlist.northwest;
-  
+
   // fist node is uneffected and figure out if the size is nxn or nxm
   bool makeOther = false;
-  bool square;
-  if (dimx == dimy) {
-	square = true;
+  bool odd;
+  if (dimx % 2 == 0) {
+	odd = false;
   } else {
-	square = false;
+	odd = true;
   }
-  
+
   int count = 1;
-  
+
   // itterate through each eliment
   while (node != NULL) {
 	if (makeOther) {
 		node -> next = node2;
 		node -> next -> prev = node;
 	}
-	
+
 	// determine if next block modifcation
-	if (square || count != dimx) {
+	if (odd || count != dimx) {
 		makeOther = !makeOther;
+    count++;
 	} else {
 		count = 1;
 	}
-	
-	count++;
+
 	node = node -> next;
 	node2 = node2 -> next;
   }
@@ -113,47 +151,47 @@ void GridList::CheckerN()
 {
   // get starting node
   GridNode* node = northwest;
-  
+
   // fist node is uneffected and figure out if the size is nxn or nxm
   bool makeNeg = false;
-  bool square;
-  if (dimx == dimy) {
-	square = true;
+  bool odd;
+  if (dimx % 2 != 0) {
+	odd = true;
   } else {
-	square = false;
+	odd = false;
   }
-  
+
   int count = 1;
-  
+
   // itterate through each eliment
   while (node != NULL) {
-	if (makeNeg) {
-		Block negBlock = node -> data;
-		negBlock.Negative();
-		node -> data = negBlock;
-	}
-	
-	// determine if next block modifcation
-	if (square || count != dimx) {
-		makeNeg = !makeNeg;
-	} else {
-		count = 1;
-	}
-	
-	count++;
-	node = node -> next;
+  	if (makeNeg) {
+  		Block negBlock = node -> data;
+  		negBlock.Negative();
+  		node -> data = negBlock;
+  	}
+
+  	// determine if next block modifcation
+  	if (odd || count != dimx) {
+  		makeNeg = !makeNeg;
+      count++;
+  	} else {
+  		count = 1;
+  	}
+
+  	node = node -> next;
   }
- 
+
 }
 
 // Deallocates any dynamic memory associated with this list
 //   and re-initializes this list to an empty state
 void GridList::Clear()
 {
-	
+
   // enter your code here
   //still need to check if there even is something to start
-  //also need to change size, north and south pointers to null. 
+  //also need to change size, north and south pointers to null.
 
   while (northwest->next != NULL) {
     northwest->prev = NULL;
@@ -168,7 +206,7 @@ void GridList::Clear()
   dimy = NULL;
   southeast = NULL;
   delete southeast;
- 
+
 }
 
 // Allocates new nodes into this list as copies of all nodes from otherlist
@@ -176,10 +214,10 @@ void GridList::Copy(const GridList& otherlist)
 {
   // keep reference to start
   GridNode* node = northwest;
-  
+
   // empty current list
   Clear();
-  
+
   // fills up with new array on nodes
   GridNode* nodeC = otherlist.northwest;
   northwest = nodeC; // make northwest of GridList be first GridNode of other list
@@ -187,10 +225,10 @@ void GridList::Copy(const GridList& otherlist)
 	  InsertBack(nodeC -> data);
 	  nodeC = nodeC -> next;
   }
-  
+
   // make northwest of GridList be first GridNode of other list
-  southeast = nodeC; 
-  
+  southeast = nodeC;
+
   dimx = otherlist.dimx;
   dimy = otherlist.dimy;
 }
