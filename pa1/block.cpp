@@ -3,6 +3,7 @@
 #include <iostream>
 #include "cs221util/PNG.h"
 #include "cs221util/HSLAPixel.h"
+#include <cmath>
 
 using namespace std;
 using namespace cs221util;
@@ -15,7 +16,7 @@ using namespace cs221util;
   //        vector indices
   void Block::Build(PNG& im, int upper, int left, int dimension) {
 	  // (0,0) is upper left corner of entire image
-	  
+
 	  // Iterate through every pixel in defined square
 	  for (int x = left; x < (left + dimension); x++) {
 		  vector<HSLAPixel> column;
@@ -73,12 +74,17 @@ using namespace cs221util;
   //   for "reversing" hue and luminance.
   void Block::Negative() {
 
-
-
+    for (int i = 0; i < data.size(); i++) {
+      for (int j = 0; j < data.size(); j++) {
+        HSLAPixel* currPixel = data[i][j];
+        currPixel->h = abs(180 - currPixel->h);
+        currPixel->l = 1 - currPixel->l;
+      }
+    }
   }
 
   // Return the horizontal (or vertical) size of the data block's image region
-  int Block::Dimension() const 
+  int Block::Dimension() const
   {
     return (int)data.size();
   }
