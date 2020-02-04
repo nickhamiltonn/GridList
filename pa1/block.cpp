@@ -24,7 +24,7 @@ using namespace cs221util;
 		for (int y = upper; y < (upper + dimension); y++) {
 		  
 		  // add pixel to vector
-		  HSLAPixel * pixel = im.getPixel(x, y);  
+		  HSLAPixel * pixel = im.getPixel(x, y); 
 		  
 		  column.push_back(*pixel);
 		}  
@@ -46,17 +46,16 @@ using namespace cs221util;
     // start at top left corner and go to width and height of dimention
 	int dimension = (int) data.size();
 	
-	printf("powp pow");
+	int w = 0;
 	for (int width = left; width < (left + dimension); width++) {
-		int w = 0;
+		int h = 0;
 		
 	    // read column from vector
 	    vector<HSLAPixel> column = data.at(w);
-	    printf("peep");
       for (int height = upper; height < (upper + dimension); height++) {
-		int h = 0;
         HSLAPixel* currPixelI = im.getPixel(width, height);
         HSLAPixel currPixelD = column.at(h);
+		printf("PixelD: %f", currPixelD.h);
 		
 		// give png pixel from vector
 		*currPixelI = currPixelD;
@@ -64,7 +63,6 @@ using namespace cs221util;
       }
 	  w++;
     }
-	printf("done here");
   }
 
 
@@ -75,9 +73,18 @@ using namespace cs221util;
   void Block::Negative() {
 
     for (int i = 0; i < data.size(); i++) {
+		vector<HSLAPixel> column = data[i];
       for (int j = 0; j < data.size(); j++) {
-        HSLAPixel* currPixel = data[i][j];
-        currPixel->h = abs(180 - currPixel->h);
+        
+		HSLAPixel* currPixel = &(column[j]);
+		
+		printf("\nBefore: %f", currPixel->h);
+        currPixel->h += 180;
+		if (currPixel->h >= 360) {
+			currPixel->h -= 360;
+		}
+		printf("\nAfter: %f", currPixel->h);
+		
         currPixel->l = 1 - currPixel->l;
       }
     }
