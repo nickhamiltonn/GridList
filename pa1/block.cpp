@@ -8,9 +8,6 @@
 using namespace std;
 using namespace cs221util;
 
-  // 2D container for pixel data
-  vector<vector<HSLAPixel>> data;
-
   // set values in data attribute, based on a dimension x dimension square region
   //   with upper-left corner at (left, upper) in the input PNG image
   // The orientation of the pixels in the data vector must match the orientation
@@ -21,14 +18,17 @@ using namespace cs221util;
 	  // (0,0) is upper left corner of entire image
 
 	  // Iterate through every pixel in defined square
-	  for (int x = left; x <= (left + dimension); x++) {
+	  for (int x = left; x < (left + dimension); x++) {
 		  vector<HSLAPixel> column;
-		  for (int y = upper; y <= (upper + dimension); y++) {
 
-			  // add pixel to vector
-			  HSLAPixel * pixel = im.getPixel(x, y);
-			  column.push_back(*pixel);
-		  }
+		for (int y = upper; y < (upper + dimension); y++) {
+		  
+		  // add pixel to vector
+		  HSLAPixel * pixel = im.getPixel(x, y);  
+		  
+		  column.push_back(*pixel);
+		}  
+		  
 		  // add column to image
 		  data.push_back(column);
 	  }
@@ -45,20 +45,26 @@ using namespace cs221util;
 	  // Can change data array because it is private to this class
     // start at top left corner and go to width and height of dimention
 	int dimension = (int) data.size();
-
-	for (int width = left; width <= (left + dimension); width++) {
-	  // read column from vector
-	  vector<HSLAPixel> column = data.at(width);
-
-      for (int height = upper; height <= (upper + dimension); height++) {
+	
+	printf("powp pow");
+	for (int width = left; width < (left + dimension); width++) {
+		int w = 0;
+		
+	    // read column from vector
+	    vector<HSLAPixel> column = data.at(w);
+	    printf("peep");
+      for (int height = upper; height < (upper + dimension); height++) {
+		int h = 0;
         HSLAPixel* currPixelI = im.getPixel(width, height);
-        HSLAPixel currPixelD = column.at(height);
-
-		// get color from pixelD and put into color for pixelI (I don't know exactly what is supposed to happen!)
-		// But i did get each pixel in image and equvanlent in vector in defined range
-        //*(imageData_ + (upper - height) = currPixelD;
+        HSLAPixel currPixelD = column.at(h);
+		
+		// give png pixel from vector
+		*currPixelI = currPixelD;
+		h++;
       }
+	  w++;
     }
+	printf("done here");
   }
 
 

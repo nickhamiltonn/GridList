@@ -70,7 +70,39 @@ void GridList::Sandwich_V(GridList& inner)
 // DO NOT ALLOCATE OR DELETE ANY NODES IN THIS FUNCTION.
 void GridList::CheckerSwap(GridList& otherlist)
 {
-  // enter your code here
+  // get starting node
+  GridNode* node = northwest;
+  GridNode* node2 = otherlist.northwest;
+  
+  // fist node is uneffected and figure out if the size is nxn or nxm
+  bool makeOther = false;
+  bool square;
+  if (dimx == dimy) {
+	square = true;
+  } else {
+	square = false;
+  }
+  
+  int count = 1;
+  
+  // itterate through each eliment
+  while (node != NULL) {
+	if (makeOther) {
+		node -> next = node2;
+		node -> next -> prev = node;
+	}
+	
+	// determine if next block modifcation
+	if (square || count != dimx) {
+		makeOther = !makeOther;
+	} else {
+		count = 1;
+	}
+	
+	count++;
+	node = node -> next;
+	node2 = node2 -> next;
+  }
 }
 
 // POST: this list has the negative effect applied selectively to GridNodes to form

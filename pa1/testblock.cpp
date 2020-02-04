@@ -82,6 +82,7 @@ TEST_CASE("Block::Build-Render full PNG", "[weight=1][part=block]") {
   REQUIRE(p1->h == 90);
   REQUIRE(p2->h == 180);
   REQUIRE(p3->h == 270);
+
 }
 
 TEST_CASE("Block::Build-Render partial PNG", "[weight=1][part=block]") {
@@ -100,19 +101,26 @@ TEST_CASE("Block::Build-Render partial PNG", "[weight=1][part=block]") {
 
   Block b;
   b.Build(img, 1, 0, 2);
+  printf(" *Built block* ");
 
   PNG outimg(4, 4);
   b.Render(outimg, 0, 0);
+    printf("dubba do");
   b.Render(outimg, 2, 0);
+    printf("dubba woo");
   b.Render(outimg, 0, 2);
+    printf("dubba why");
   b.Render(outimg, 2, 2);
+  printf("Rendered");
 
   HSLAPixel* p0 = outimg.getPixel(0, 0);
   HSLAPixel* p1 = outimg.getPixel(1, 0);
   HSLAPixel* p2 = outimg.getPixel(0, 1);
   HSLAPixel* p3 = outimg.getPixel(1, 1);
+  printf("Got some pixels");
 
   REQUIRE(b.Dimension() == 2);
+  printf("Probs wont get here");
   REQUIRE(p0->h == 90);
   REQUIRE(p1->h == 90);
   REQUIRE(p2->h == 180);
