@@ -82,6 +82,64 @@ void GridList::InsertBack(const Block& bdata)
 void GridList::Sandwich_H(GridList& inner)
 {
   // enter your code here
+/*
+  if (dimy == inner.dimy) {
+
+    int middle = (dimx / 2);
+
+    GridNode* tempBegin = northwest;
+    GridNode* tempMiddle = inner.northwest;
+    GridNode* tempEnd = inner.northwest;
+
+    printf("We starting the outest loop\n");
+
+    for (int i = 0; i < dimy; i++) {
+      printf("We inside the outest loop\n");
+      for (int j = 0; j < dimx; j++) {
+        //printf("We inside the middle loop\n");
+        printf("%d\n",j);
+
+        if (j = middle - 1) {
+          printf("%d\n",j);
+          tempEnd->prev = tempBegin;
+          //printf("We about to move tempEnd\n");
+          for (int x = 0; (x < (inner.dimx - 1)); x++) {
+            tempEnd = tempEnd->next;
+          }
+          //printf("We have moved tempEnd to the end of row of the innest image\n");
+
+          if (tempEnd->next != NULL) {
+            printf("tempEnd next != NULL \n");
+            tempBegin->next->prev = tempEnd;
+        //    printf("move tempBegin next prev to end\n");
+            tempEnd = tempEnd->next;
+        //    printf("move temp end again\n");
+            tempEnd->prev->next = tempBegin->next;
+        //    printf("tempEnd prev next gets temp next\n");
+            tempBegin = tempBegin->next;
+        //    printf("move temp begin\n");
+            tempMiddle->prev->next = tempMiddle;
+        //    printf("move tempMiddle prev next to current tempMiddle\n");
+            tempMiddle = tempEnd;
+        //    printf("assign tempMiddle to tempEnd\n");
+          } else {
+              printf("TempEnd next is null\n");
+              tempEnd->next = tempBegin->next;
+              tempBegin = tempBegin->next;
+              tempMiddle->prev->next = tempMiddle;
+            }
+        } else {
+          printf("We moving tempBegin normally\n");
+
+          if (tempBegin->next != NULL) {
+            tempBegin = tempBegin->next;
+          }
+          }
+        }
+      }
+      printf("We have finished the hard way\n");
+  }
+  printf("We have finished the easy way\n"); */
 }
 
 // inner list must have the same horizontal resolution, horizontal block dimension, and block size
