@@ -7,9 +7,6 @@
 // ADD YOUR FUNCTION IMPLEMENTATIONS IN THIS FILE
 //
 
-//Swag
-//Nicks Swag
-
 #include "gridlist.h"
 #include "gridlist_given.cpp"
 
@@ -18,8 +15,6 @@
 // The fully coloured PNG is returned.
 PNG GridList::Render() const
 {
-  //need to initialize properly
-
   printf("We inside render test\n");
 
   int height = 0;
@@ -42,7 +37,6 @@ PNG GridList::Render() const
   }
 
   printf("We finished render loops, about to return\n");
-  // enter your code here
   return image;
 }
 
@@ -51,8 +45,6 @@ PNG GridList::Render() const
 // Be careful of the special case of inserting into an empty list.
 void GridList::InsertBack(const Block& bdata)
 {
-  // enter your code here
-
   GridNode* newNode = new GridNode(bdata);
   if (northwest == NULL) {
     northwest = newNode;
@@ -65,8 +57,6 @@ void GridList::InsertBack(const Block& bdata)
     newNode->next =  NULL;
     southeast = newNode;
   }
-
-
 }
 
 // if this list has an odd number of column blocks, then the right side will have more blocks
@@ -81,8 +71,8 @@ void GridList::InsertBack(const Block& bdata)
 // DO NOT ALLOCATE OR DELETE ANY NODES IN THIS FUNCTION.
 void GridList::Sandwich_H(GridList& inner)
 {
-  // enter your code here
-/*
+  //issues with segfaulting in this function
+
   if (dimy == inner.dimy) {
 
     int middle = (dimx / 2);
@@ -96,32 +86,23 @@ void GridList::Sandwich_H(GridList& inner)
     for (int i = 0; i < dimy; i++) {
       printf("We inside the outest loop\n");
       for (int j = 0; j < dimx; j++) {
-        //printf("We inside the middle loop\n");
         printf("%d\n",j);
 
         if (j = middle - 1) {
           printf("%d\n",j);
           tempEnd->prev = tempBegin;
-          //printf("We about to move tempEnd\n");
           for (int x = 0; (x < (inner.dimx - 1)); x++) {
             tempEnd = tempEnd->next;
           }
-          //printf("We have moved tempEnd to the end of row of the innest image\n");
 
           if (tempEnd->next != NULL) {
             printf("tempEnd next != NULL \n");
             tempBegin->next->prev = tempEnd;
-        //    printf("move tempBegin next prev to end\n");
             tempEnd = tempEnd->next;
-        //    printf("move temp end again\n");
             tempEnd->prev->next = tempBegin->next;
-        //    printf("tempEnd prev next gets temp next\n");
             tempBegin = tempBegin->next;
-        //    printf("move temp begin\n");
             tempMiddle->prev->next = tempMiddle;
-        //    printf("move tempMiddle prev next to current tempMiddle\n");
             tempMiddle = tempEnd;
-        //    printf("assign tempMiddle to tempEnd\n");
           } else {
               printf("TempEnd next is null\n");
               tempEnd->next = tempBegin->next;
@@ -155,7 +136,7 @@ void GridList::Sandwich_H(GridList& inner)
 // DO NOT ALLOCATE OR DELETE ANY NODES IN THIS FUNCTION.
 void GridList::Sandwich_V(GridList& inner)
 {
-  // enter your code here
+  // Not implemented
 }
 
 
@@ -246,11 +227,6 @@ void GridList::CheckerN()
 //   and re-initializes this list to an empty state
 void GridList::Clear()
 {
-
-  // enter your code here
-  //still need to check if there even is something to start
-  //also need to change size, north and south pointers to null.
-
   while (northwest->next != NULL) {
     northwest->prev = NULL;
     delete northwest;
@@ -290,7 +266,3 @@ void GridList::Copy(const GridList& otherlist)
   dimx = otherlist.dimx;
   dimy = otherlist.dimy;
 }
-
-// IMPLEMENT ANY PRIVATE FUNCTIONS YOU HAVE ADDED BELOW
-//
-//

@@ -20,19 +20,14 @@ using namespace cs221util;
 	  // Iterate through every pixel in defined square
 	  for (int x = left; x < (left + dimension); x++) {
 		  vector<HSLAPixel> column;
-
-		for (int y = upper; y < (upper + dimension); y++) {
-
-		  // add pixel to vector
-		  HSLAPixel * pixel = im.getPixel(x, y);
-
-		  column.push_back(*pixel);
-		}
-
-		  // add column to image
-		  data.push_back(column);
-	  }
-
+  		for (int y = upper; y < (upper + dimension); y++) {
+  		  // add pixel to vector
+  		  HSLAPixel * pixel = im.getPixel(x, y);
+  		  column.push_back(*pixel);
+  		}
+  		  // add column to image
+  		  data.push_back(column);
+  	}
   }
 
 
@@ -44,24 +39,24 @@ using namespace cs221util;
   {
 	  // Can change data array because it is private to this class
     // start at top left corner and go to width and height of dimention
-	int dimension = (int) data.size();
+  	int dimension = (int) data.size();
 
-	int w = 0;
-	for (int width = left; width < (left + dimension); width++) {
-		int h = 0;
+  	int w = 0;
+  	for (int width = left; width < (left + dimension); width++) {
+  		int h = 0;
 
-	    // read column from vector
-	    vector<HSLAPixel> column = data.at(w);
+      // read column from vector
+      vector<HSLAPixel> column = data.at(w);
       for (int height = upper; height < (upper + dimension); height++) {
         HSLAPixel* currPixelI = im.getPixel(width, height);
         HSLAPixel currPixelD = column.at(h);
-		printf("PixelD: %f", currPixelD.h);
-
-		// give png pixel from vector
-		*currPixelI = currPixelD;
-		h++;
+    		printf("PixelD: %f", currPixelD.h);
+        
+    		// give png pixel from vector
+    		*currPixelI = currPixelD;
+    		h++;
       }
-	  w++;
+  	  w++;
     }
   }
 
@@ -74,16 +69,16 @@ using namespace cs221util;
 
     for (int i = 0; i < data.size(); i++) {
       for (int j = 0; j < data.size(); j++) {
-  		HSLAPixel* currPixel = &(data[i][j]);
-  		printf("\nBefore: %f", currPixel->h);
-      currPixel->h += 180;
+    		HSLAPixel* currPixel = &(data[i][j]);
+    		printf("\nBefore: %f", currPixel->h);
+        currPixel->h += 180;
 
-      if (currPixel->h >= 360) {
-  			currPixel->h -= 360;
-  		}
+        if (currPixel->h >= 360) {
+    			currPixel->h -= 360;
+    		}
 
-      printf("\nAfter: %f", currPixel->h);
-		  currPixel->l = 1 - currPixel->l;
+        printf("\nAfter: %f", currPixel->h);
+  		  currPixel->l = 1 - currPixel->l;
 
       }
     }
